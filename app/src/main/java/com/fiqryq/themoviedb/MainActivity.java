@@ -1,10 +1,19 @@
 package com.fiqryq.themoviedb;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Adapter;
+import android.widget.GridLayout;
+import android.widget.Toast;
 
 import com.fiqryq.themoviedb.adapter.MovieAdapter;
 import com.fiqryq.themoviedb.model.Movie;
@@ -29,9 +38,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//
+//        getSupportActionBar().hide();
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.custom_actionbar_home);
 
         recyclerView = findViewById(R.id.rvListMovie);
-        arrayList = new ArrayList<Movie.ResultsBean>();
+        arrayList = new ArrayList<>();
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         getMovie();
@@ -43,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 Movie movie = response.body();
-
                 if (response.body().getTotal_results() != 0){
                     for (int i = 0; i <movie.getResults().size() ; i++) {
                         List<Movie.ResultsBean> list = movie.getResults();
@@ -51,19 +65,19 @@ public class MainActivity extends AppCompatActivity {
                         arrayList.add(movieList);
                     }
                 } setuprecyclerView(arrayList);
-
             }
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
-
+                Toast.makeText(MainActivity.this, "Error" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void setuprecyclerView(ArrayList<Movie.ResultsBean> arrayList){
         MovieAdapter movieAdapter = new MovieAdapter(getApplicationContext(),arrayList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
+        recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(movieAdapter);
     }
 }
