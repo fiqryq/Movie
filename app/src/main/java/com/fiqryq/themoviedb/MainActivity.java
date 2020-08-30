@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -23,6 +22,8 @@ import com.fiqryq.themoviedb.util.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.logging.Handler;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private ApiInterface apiInterface;
     private RecyclerView recyclerView;
     private ArrayList<Movie.ResultsBean> arrayList;
+    private MovieAdapter movieAdapter;
+    private GridLayoutManager gridLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +45,14 @@ public class MainActivity extends AppCompatActivity {
 //        getSupportActionBar().hide();
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_actionbar_home);
 
         recyclerView = findViewById(R.id.rvListMovie);
         arrayList = new ArrayList<>();
+
+        movieAdapter = new MovieAdapter(getApplicationContext(),arrayList);
+        gridLayoutManager = new GridLayoutManager(this,2);
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         getMovie();
@@ -63,8 +69,11 @@ public class MainActivity extends AppCompatActivity {
                         List<Movie.ResultsBean> list = movie.getResults();
                         Movie.ResultsBean movieList = list.get(i);
                         arrayList.add(movieList);
+                        movieAdapter.isShimmer = false;
+                        recyclerView.setLayoutManager(gridLayoutManager);
+                        recyclerView.setAdapter(movieAdapter);
                     }
-                } setuprecyclerView(arrayList);
+                }
             }
 
             @Override
@@ -75,9 +84,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setuprecyclerView(ArrayList<Movie.ResultsBean> arrayList){
-        MovieAdapter movieAdapter = new MovieAdapter(getApplicationContext(),arrayList);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(movieAdapter);
+
+
+
     }
 }

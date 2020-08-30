@@ -19,6 +19,7 @@ public class DetailMovie extends AppCompatActivity {
 
     private ImageView mPoster;
     private Toolbar toolbar;
+    private TextView mOverview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +31,19 @@ public class DetailMovie extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         mPoster = findViewById(R.id.detail_movie_poster);
+        mOverview = findViewById(R.id.detail_movie_overview);
 
         // Get data form intent
         Intent intent = getIntent();
         String movie_title = intent.getStringExtra("TITLE");
         String movie_poster = intent.getStringExtra("POSTER");
+        String movie_overview = intent.getStringExtra("OVERVIEW");
 
+        // Set Image and tittle
         getSupportActionBar().setTitle(movie_title);
         Glide.with(this).load(Constant.IMAGE_REQUEST + movie_poster).diskCacheStrategy(DiskCacheStrategy.DATA).into(mPoster);
+
+        // Set Text
+        mOverview.setText(movie_overview);
     }
 }
