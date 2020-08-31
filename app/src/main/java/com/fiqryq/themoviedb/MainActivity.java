@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private ImageSlider imageSlider;
-    private Boolean isScrolling = false;
-    private int currentItems, totalItems, scroolOutItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,10 +122,8 @@ public class MainActivity extends AppCompatActivity {
                         List<Movie.ResultsBean> list = movie.getResults();
                         Movie.ResultsBean movieList = list.get(i);
                         arrayList.add(movieList);
-                        movieAdapter.isShimmer = false;
                         recyclerView.setLayoutManager(gridLayoutManager);
                         recyclerView.setAdapter(movieAdapter);
-                        movieAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -138,30 +134,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    //    private void loadMoreMovie(){
-//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
-//                    isScrolling = true;
-//                }
-//            }
-//
-//            @Override
-//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                currentItems = gridLayoutManager.getChildCount();
-//                totalItems = gridLayoutManager.getItemCount();
-//                scroolOutItems = gridLayoutManager.findFirstCompletelyVisibleItemPosition();
-//
-//                if (isScrolling && (currentItems + scroolOutItems == totalItems)){
-//                    isScrolling = false;
-//                    getMovie();
-//                }
-//            }
-//        });
-//
 
 }

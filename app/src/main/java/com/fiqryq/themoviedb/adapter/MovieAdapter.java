@@ -28,8 +28,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     private Context context;
     private List<Movie.ResultsBean> mData;
-    public boolean isShimmer = true;
-    int shimmerNumber = 5;
 
     public MovieAdapter(Context context, List<Movie.ResultsBean> mData) {
         this.context = context;
@@ -48,18 +46,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        if (isShimmer){
-            holder.shimmerFrameLayout.startShimmer();
-        } else {
-            holder.shimmerFrameLayout.stopShimmer();
-            holder.shimmerFrameLayout.setShimmer(null);
-
-            // Set data
-            holder.title.setText(mData.get(position).getTitle());
-            holder.movie_release.setText(mData.get(position).getRelease_date());
-            String image = mData.get(position).getPoster_path();
-            Glide.with(context).load(Constant.IMAGE_REQUEST + image).diskCacheStrategy(DiskCacheStrategy.DATA).into(holder.poster);
-        }
+        holder.title.setText(mData.get(position).getTitle());
+        holder.movie_release.setText(mData.get(position).getRelease_date());
+        String image = mData.get(position).getPoster_path();
+        Glide.with(context).load(Constant.IMAGE_REQUEST + image).diskCacheStrategy(DiskCacheStrategy.DATA).into(holder.poster);
 
         // Send data to detail
         String title = mData.get(position).getTitle();
@@ -85,8 +75,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return isShimmer?shimmerNumber:mData.size();
-//        return mData.size();
+        return mData.size();
     }
 
 
@@ -95,7 +84,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         private TextView title,movie_release;
         private ImageView poster;
         private LinearLayout cardMovie;
-        private ShimmerFrameLayout shimmerFrameLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -103,7 +91,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             title = itemView.findViewById(R.id.movie_tittle);
             movie_release = itemView.findViewById(R.id.movie_release);
             cardMovie = itemView.findViewById(R.id.card_view_movie);
-            shimmerFrameLayout = itemView.findViewById(R.id.shimmer);
         }
     }
 }

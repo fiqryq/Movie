@@ -56,11 +56,20 @@ public class DetailMovie extends AppCompatActivity {
         String movie_title = intent.getStringExtra("TITLE");
         String movie_poster = intent.getStringExtra("POSTER");
         String movie_overview = intent.getStringExtra("OVERVIEW");
-
         int[] genre_ids = intent.getIntArrayExtra("GENRE");
 
-        Call<Genre> genreCall = apiInterface.getGenres(Constant.API_KEY, Constant.LANGUAGE);
 
+        // Set Image and tittle
+        getSupportActionBar().setTitle(movie_title);
+        Glide.with(this).load(Constant.IMAGE_REQUEST + movie_poster).diskCacheStrategy(DiskCacheStrategy.DATA).into(mPoster);
+        getGenre(genre_ids);
+
+        // Set Text
+        mOverview.setText(movie_overview);
+    }
+
+    private void getGenre(int[] genre_ids){
+        Call<Genre> genreCall = apiInterface.getGenres(Constant.API_KEY, Constant.LANGUAGE);
         genreCall.enqueue(new Callback<Genre>() {
             @Override
             public void onResponse(Call<Genre> call, Response<Genre> response) {
@@ -86,12 +95,5 @@ public class DetailMovie extends AppCompatActivity {
 
             }
         });
-
-        // Set Image and tittle
-        getSupportActionBar().setTitle(movie_title);
-        Glide.with(this).load(Constant.IMAGE_REQUEST + movie_poster).diskCacheStrategy(DiskCacheStrategy.DATA).into(mPoster);
-
-        // Set Text
-        mOverview.setText(movie_overview);
     }
 }
