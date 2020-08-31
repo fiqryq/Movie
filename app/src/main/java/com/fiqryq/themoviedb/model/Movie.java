@@ -2,6 +2,8 @@ package com.fiqryq.themoviedb.model;
 
 import android.content.Context;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,7 +87,10 @@ public class Movie {
         private double vote_average;
         private String overview;
         private String release_date;
-        private List<Integer> genre_ids;
+//        private List<Integer> genre_ids;
+
+        @SerializedName("genre_ids")
+        private int[] genre_ids;
 
         public double getPopularity() {
             return popularity;
@@ -191,11 +196,11 @@ public class Movie {
             this.release_date = release_date;
         }
 
-        public List<Integer> getGenre_ids() {
+        public int[] getGenre_ids() {
             return genre_ids;
         }
 
-        public void setGenre_ids(List<Integer> genre_ids) {
+        public void setGenre_ids(int[] genre_ids) {
             this.genre_ids = genre_ids;
         }
     }

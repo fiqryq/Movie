@@ -1,5 +1,6 @@
 package com.fiqryq.themoviedb.network;
 
+import com.fiqryq.themoviedb.model.Genre;
 import com.fiqryq.themoviedb.model.Movie;
 
 import retrofit2.Call;
@@ -15,6 +16,12 @@ public interface ApiInterface {
             @Query("api_key") String apiKey,
             @Query("language") String language,
             @Query("page") int page
+    );
+
+    @GET("/3/genre/movie/list")
+    Call<Genre> getGenres(
+            @Query("api_key") String apiKey,
+            @Query("language") String language
     );
 
 }

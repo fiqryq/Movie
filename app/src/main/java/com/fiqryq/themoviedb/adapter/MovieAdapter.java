@@ -2,6 +2,7 @@ package com.fiqryq.themoviedb.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +66,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         String poster = mData.get(position).getPoster_path();
         String overview = mData.get(position).getOverview();
 
+        int[] genreId = mData.get(position).getGenre_ids();
+
         holder.cardMovie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +75,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 intent.putExtra("TITLE",title);
                 intent.putExtra("POSTER",poster);
                 intent.putExtra("OVERVIEW",overview);
+                intent.putExtra("GENRE", genreId);
+
                 context.startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });

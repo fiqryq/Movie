@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,7 +16,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsingTollbar"
+            android:id="@+id/collapsingTollbarHome"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
@@ -27,12 +26,12 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <ImageView
-                android:id="@+id/detail_movie_poster"
+                android:id="@+id/home_movie_poster"
                 android:layout_width="match_parent"
-                android:layout_height="380dp"
+                android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 android:src="@drawable/gambar"
-                android:scaleType="fitXY"
+                android:scaleType="center"
                 app:layout_collapseMode="parallax"/>
 
             <View
@@ -42,7 +41,7 @@
                 android:background="@drawable/tittle_background"/>
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/toolbar_home"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 app:contentInsetStart="0dp"
@@ -67,44 +66,16 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
-            <TextView
-                android:id="@+id/detail_movie_genre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/fjalla"
-                android:padding="3dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/custom_card"
-                android:textSize="14sp"
-                android:textColor="@color/white"/>
+            <!--     Recycler here       -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/fjalla"
-                android:textSize="18sp"
-                android:text="Overview"
-                android:textColor="@color/white"/>
-
-            <TextView
-                android:id="@+id/detail_movie_overview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:textSize="12sp"
-                android:text="Overview"
-                android:textColor="@color/whitegray"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvListMovie"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_marginEnd="30dp"-->
-<!--        android:src="@drawable/icon"-->
-<!--        app:layout_anchor="@id/appBarLayout"-->
-<!--        app:layout_anchorGravity="bottom|end|right"/>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
