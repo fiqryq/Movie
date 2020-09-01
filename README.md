@@ -2,7 +2,8 @@
 Aplikasi ini menampilkan list movie populer menggunakan themoviedb.
 
 ## Preview App
-
+<span align="center"><img width="200px" height="360px" src="img/main.gif"></span>
+<span align="center"><img width="200px" height="360px" src="img/detail.gif"></span>
 
 ## Completed Task
 - [x] Get data dari api
