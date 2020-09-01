@@ -87,16 +87,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 Movie movie = response.body();
-                if (response.body().getTotal_results() != 0) {
+                if (response.body().getTotal_results() != 0 ) {
 
                     List<Movie.ResultsBean> list = movie.getResults();
+
                     // Carousel Library
                     List<SlideModel> Slider = new ArrayList<>();
 
                     for (int i = 0; i < movie.getResults().size(); i++) {
                         Movie.ResultsBean movieList = list.get(i);
 
-                        Slider.add(new SlideModel(Constant.IMAGE_REQUEST + movieList.getPoster_path()));
+                        Slider.add(new SlideModel(Constant.IMAGE_REQUEST + movieList.getBackdrop_path()));
 
                     }
 

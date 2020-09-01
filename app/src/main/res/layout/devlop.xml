@@ -79,3 +79,85 @@
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+<!--<LinearLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--android:layout_marginTop="15dp"-->
+<!--android:layout_marginBottom="15dp"-->
+<!--android:orientation="horizontal"-->
+<!--android:weightSum="3">-->
+
+<!--<LinearLayout-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical"-->
+<!--    android:gravity="center"-->
+<!--    android:layout_weight="1">-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/detail_movie_lang"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginBottom="5dp"-->
+<!--        android:src="@drawable/lang"/>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="@font/fjalla"-->
+<!--        android:textSize="14sp"-->
+<!--        android:text="Rate"-->
+<!--        android:textColor="@color/white"/>-->
+
+<!--</LinearLayout>-->
+
+<!--<LinearLayout-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical"-->
+<!--    android:gravity="center"-->
+<!--    android:layout_weight="1">-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/detail_movie_popular"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginBottom="5dp"-->
+<!--        android:src="@drawable/popular"/>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="@font/fjalla"-->
+<!--        android:textSize="14sp"-->
+<!--        android:text="Rate"-->
+<!--        android:textColor="@color/white"/>-->
+
+<!--</LinearLayout>-->
+
+<!--<LinearLayout-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:gravity="center"-->
+<!--    android:orientation="vertical"-->
+<!--    android:layout_weight="1">-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/detail_movie_rate"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginBottom="5dp"-->
+<!--        android:src="@drawable/rating"/>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="@font/fjalla"-->
+<!--        android:textSize="14sp"-->
+<!--        android:text="Rate"-->
+<!--        android:textColor="@color/white"/>-->
+
+<!--</LinearLayout>-->
+
+<!--</LinearLayout>-->

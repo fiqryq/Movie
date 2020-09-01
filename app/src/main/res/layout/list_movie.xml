@@ -6,10 +6,6 @@
     android:layout_margin="4dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,24 +42,27 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/movie_release"
+                    android:id="@+id/movie_overview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:text="Movie"
+                    android:textColor="@color/whitegray"
                     android:fontFamily="sans-serif"
-                    android:text="2020-08-06"
-                    android:textSize="12sp" />
+                    android:maxLength="50"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
-<!--                <RatingBar-->
-<!--                    android:id="@+id/ratingBar"-->
-<!--                    android:layout_width="wrap_content"-->
+<!--                <TextView-->
+<!--                    android:id="@+id/movie_release"-->
+<!--                    android:layout_width="match_parent"-->
 <!--                    android:layout_height="wrap_content"-->
-<!--                    android:theme="@style/RatingBar" />-->
+<!--                    android:textColor="@color/whitegray"-->
+<!--                    android:fontFamily="sans-serif"-->
+<!--                    android:text="2020-08-06"-->
+<!--                    android:textSize="12sp" />-->
 
             </LinearLayout>
 
         </LinearLayout>
-
-    </com.facebook.shimmer.ShimmerFrameLayout>
 
 </LinearLayout>
