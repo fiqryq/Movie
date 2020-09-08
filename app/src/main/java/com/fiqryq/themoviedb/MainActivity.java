@@ -1,28 +1,16 @@
 package com.fiqryq.themoviedb;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.WindowManager;
-import android.widget.AbsListView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
-import com.fiqryq.themoviedb.adapter.MovieAdapter;
+import com.fiqryq.themoviedb.adapter.NowPlayingAdapter;
+import com.fiqryq.themoviedb.adapter.TopRatedAdapter;
+import com.fiqryq.themoviedb.adapter.PopularAdapter;
 import com.fiqryq.themoviedb.model.Movie;
 import com.fiqryq.themoviedb.network.ApiClient;
 import com.fiqryq.themoviedb.network.ApiInterface;
@@ -41,10 +29,17 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private ApiInterface apiInterface;
-    private RecyclerView recyclerView;
-    private ArrayList<Movie.ResultsBean> arrayList;
-    private MovieAdapter movieAdapter;
-    private GridLayoutManager gridLayoutManager;
+
+    // init RecyclerVIew
+    private RecyclerView recyclerViewTopRated , recyclerViewPopular , recyclerViewNowPlaying;
+
+    // Init Arraylist
+    private ArrayList<Movie.ResultsBean> arrayListTopRated , arrayListPopular, arrayListNowPlaying;
+
+    // Adapter Category
+    private TopRatedAdapter topRatedAdapter;
+    private PopularAdapter popularAdapter;
+    private NowPlayingAdapter nowPlayingAdapter;
 
     private Toolbar toolbar;
     private ImageSlider imageSlider;
@@ -59,26 +54,36 @@ public class MainActivity extends AppCompatActivity {
         imageSlider = findViewById(R.id.poster_slider);
         setSupportActionBar(toolbar);
 
-//        Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-//        getSupportActionBar().setCustomView(R.layout.custom_actionbar_home);
+        // Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        // getSupportActionBar().setCustomView(R.layout.custom_actionbar_home);
 
         // Set Flag layout No limit (full frame layout)
         Objects.requireNonNull(getSupportActionBar()).hide();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        // Setup recyclerview
-        recyclerView = findViewById(R.id.rvListMovie);
-        arrayList = new ArrayList<>();
+        // Init Recyclerview
+        recyclerViewTopRated = findViewById(R.id.rvTopRated);
+        recyclerViewPopular = findViewById(R.id.rvPopular);
+        recyclerViewNowPlaying = findViewById(R.id.rvNowPlaying);
 
-        movieAdapter = new MovieAdapter(getApplicationContext(), arrayList);
-        gridLayoutManager = new GridLayoutManager(this, 2);
+        // Init Arraylist
+        arrayListTopRated = new ArrayList<>();
+        arrayListPopular = new ArrayList<>();
+        arrayListNowPlaying = new ArrayList<>();
 
-        // Call Api interface
+        // Init Adapter
+        topRatedAdapter = new TopRatedAdapter(getApplicationContext(), arrayListTopRated);
+        popularAdapter = new PopularAdapter(getApplicationContext(),arrayListPopular);
+        nowPlayingAdapter = new NowPlayingAdapter(getApplicationContext(),arrayListNowPlaying);
+
+        // Init interface
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         // Get Metode
         getPoster();
-        getMovie();
+        getMovieTopRated();
+        getMoviePopular();
+        getMovieNowPlaying();
     }
 
     private void getPoster() {
@@ -87,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 Movie movie = response.body();
-                if (response.body().getTotal_results() != 0 ) {
+                if (response.body().getTotal_results() != 0) {
 
                     List<Movie.ResultsBean> list = movie.getResults();
 
@@ -112,8 +117,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void getMovie() {
-        Call<Movie> call = apiInterface.getMovies(Constant.CATEGORYLIST, Constant.API_KEY, Constant.LANGUAGE, Constant.PAGE);
+    // Get Category
+    private void getMovieTopRated() {
+        Call<Movie> call = apiInterface.getMovies(Constant.CATEGORY_TOP_RATED, Constant.API_KEY, Constant.LANGUAGE, Constant.PAGE);
         call.enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
@@ -122,9 +128,9 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < movie.getResults().size(); i++) {
                         List<Movie.ResultsBean> list = movie.getResults();
                         Movie.ResultsBean movieList = list.get(i);
-                        arrayList.add(movieList);
-                        recyclerView.setLayoutManager(gridLayoutManager);
-                        recyclerView.setAdapter(movieAdapter);
+                        arrayListTopRated.add(movieList);
+                        recyclerViewTopRated.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                        recyclerViewTopRated.setAdapter(topRatedAdapter);
                     }
                 }
             }
@@ -135,5 +141,50 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private void getMoviePopular() {
+        Call<Movie> call = apiInterface.getMovies(Constant.CATEGORY_POPULAR, Constant.API_KEY, Constant.LANGUAGE, Constant.PAGE);
+        call.enqueue(new Callback<Movie>() {
+            @Override
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
+                Movie movie = response.body();
+                if (response.body().getTotal_results() != 0) {
+                    for (int i = 0; i < movie.getResults().size(); i++) {
+                        List<Movie.ResultsBean> list = movie.getResults();
+                        Movie.ResultsBean movieList = list.get(i);
+                        arrayListPopular.add(movieList);
+                        recyclerViewPopular.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                        recyclerViewPopular.setAdapter(popularAdapter);
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Movie> call, Throwable t) {
+                t.getMessage();
+            }
+        });
+    }
+    private void getMovieNowPlaying() {
+        Call<Movie> call = apiInterface.getMovies(Constant.CATEGORY_NOW_PLAYING, Constant.API_KEY, Constant.LANGUAGE, Constant.PAGE);
+        call.enqueue(new Callback<Movie>() {
+            @Override
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
+                Movie movie = response.body();
+                if (response.body().getTotal_results() != 0) {
+                    for (int i = 0; i < movie.getResults().size(); i++) {
+                        List<Movie.ResultsBean> list = movie.getResults();
+                        Movie.ResultsBean movieList = list.get(i);
+                        arrayListNowPlaying.add(movieList);
+                        recyclerViewNowPlaying.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                        recyclerViewNowPlaying.setAdapter(nowPlayingAdapter);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Movie> call, Throwable t) {
+                t.getMessage();
+            }
+        });
+    }
 }
